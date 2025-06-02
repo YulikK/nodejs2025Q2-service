@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException, UnprocessableEntityException, forwardRef } from '@nestjs/common';
-import { Favorites } from './favorites.entity';
+import { Favorites } from './entities/favorites.entity';
 import { TrackService } from '../track/track.service';
 import { AlbumService } from '../album/album.service';
 import { ArtistService } from '../artist/artist.service';
