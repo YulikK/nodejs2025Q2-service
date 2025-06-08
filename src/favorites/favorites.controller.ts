@@ -53,4 +53,4 @@ export class FavoritesController {
   removeArtist(@Param('id', ParseUUIDPipe) id: string) {
     return this.favoritesService.removeArtist(id);
   }
-} 
+}
