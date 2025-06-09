@@ -67,8 +67,8 @@ export class TrackService extends DataService<Track> {
 
   async clearReference(id: string, field: 'albumId' | 'artistId'): Promise<void> {
     const tracks = await this.repository
-      .createQueryBuilder()
-      .where(`${field} = :id`, { id })
+      .createQueryBuilder('track')
+      .where(`track.${field} = :id`, { id })
       .getMany();
 
     for (const track of tracks) {

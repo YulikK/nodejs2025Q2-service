@@ -6,6 +6,8 @@ import { AlbumService } from 'src/album/album.service';
 import { FavoritesService } from 'src/favorites/favorites.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateArtistDto } from './dto/create-artist.dto';
+import { UpdateArtistDto } from './dto/update-artist.dto';
 
 @Injectable()
 export class ArtistService extends DataService<Artist> {
@@ -25,10 +27,12 @@ export class ArtistService extends DataService<Artist> {
   }
 
   async remove(id: string): Promise<void> {
-    await super.remove(id);
-
-    await this.trackService.clearReference(id, 'artistId');
-    await this.albumService.clearReference(id, 'artistId');
-    await this.favoritesService.removeFromFavorites(id);
+    const artist = await this.findOne(id);
+    if (artist) {
+      await this.trackService.clearReference(id, 'artistId');
+      await this.albumService.clearReference(id, 'artistId');
+      await this.favoritesService.removeFromFavorites(id);
+      await this.repository.remove(artist);
+    }
   }
 }

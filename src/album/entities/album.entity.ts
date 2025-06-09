@@ -1,7 +1,6 @@
 import {
   IsInt,
   IsNotEmpty,
-  IsOptional,
   IsPositive,
   IsString,
   IsUUID,
@@ -33,10 +32,10 @@ export class Album {
   year: number;
 
   @ManyToOne(() => Artist, { nullable: true, onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'artist_id' })
+  @JoinColumn({ name: 'artistId' })
   artist: Artist;
 
-  @Column({ name: 'artist_id', nullable: true })
+  @Column({ nullable: true })
   @Expose()
   artistId: string;
 

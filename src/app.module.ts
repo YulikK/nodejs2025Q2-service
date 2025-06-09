@@ -11,7 +11,13 @@ import { Artist } from './artist/entities/artist.entity';
 import { Album } from './album/entities/album.entity';
 import { Track } from './track/entities/track.entity';
 import { Favorites } from './favorites/entities/favorites.entity';
+import { DefaultNamingStrategy } from 'typeorm';
 
+class CamelCaseNamingStrategy extends DefaultNamingStrategy {
+  columnName(propertyName: string, customName: string): string {
+    return customName || propertyName;
+  }
+}
 
 @Module({
   imports: [
@@ -27,6 +33,7 @@ import { Favorites } from './favorites/entities/favorites.entity';
       synchronize: false,
       migrations: ['dist/src/migrations/*.js'],
       migrationsRun: true,
+      namingStrategy: new CamelCaseNamingStrategy(),
     }),
     TypeOrmModule.forFeature([User, Artist, Album, Track, Favorites]),
     UserModule,

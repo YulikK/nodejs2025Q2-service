@@ -53,8 +53,8 @@ export class AlbumService extends DataService<Album> {
 
   async clearReference(id: string, field: 'artistId'): Promise<void> {
     const albums = await this.repository
-      .createQueryBuilder()
-      .where(`${field} = :id`, { id })
+      .createQueryBuilder('album')
+      .where(`album.${field} = :id`, { id })
       .getMany();
 
     for (const album of albums) {
