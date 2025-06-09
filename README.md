@@ -7,100 +7,68 @@ The Home Library Service is a music library management system that allows you to
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads)
-- Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) version 22.x.x
 - Docker - [Download & Install Docker](https://docs.docker.com/get-docker/)
 
-## Downloading
+## Running the application
 
-```
-git clone {repository URL}
-```
-
-## Installing NPM modules
-
-```
-npm install
+1. Clone this repository:
+```bash
+git clone <repository-url>
+cd <repository-name>
 ```
 
-## Running application
-
-Create a `.env` file in the root directory and add the following environment variables:
-```
+2. Create a `.env` file in the root directory with the following environment variables:
+```env
 PORT=4000
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=library
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin
 ```
 
-### Running application in Docker
+Environment variables description:
+- PORT: The port on which the application will run (default: 4000)
+- POSTGRES_HOST: The hostname of the Postgres database (default: postgres)
+- POSTGRES_PORT: The port number of the Postgres database (default: 5432)
+- POSTGRES_USER: The username for accessing the Postgres database
+- POSTGRES_PASSWORD: The password for accessing the Postgres database
 
-1. Build the images:
+Note: The database name will be automatically set to the same value as POSTGRES_USER.
+
+3. Build and start the application:
 ```bash
-docker-compose build
+docker compose build
+docker compose up
 ```
 
-2. Scan images for vulnerabilities:
+By default, the application will run on port 4000, in development mode, so it will automatically restart when you make changes to the code in the `src` directory.
+
+4. To stop the application:
 ```bash
-# Install docker scan if not available
-docker scan --version || curl -fsSL https://raw.githubusercontent.com/docker/scan-cli-plugin/main/install.sh | sh
-
-# Scan the images
-docker scan your-username/home-library:latest
-docker scan postgres:latest
-```
-
-3. Push images to Docker Hub:
-```bash
-# Login to Docker Hub
-docker login
-
-# Tag images
-docker tag home-library:latest your-username/home-library:latest
-
-# Push images
-docker push your-username/home-library:latest
-```
-
-4. Run the application:
-```bash
-docker-compose up
-```
-
-The app will be available on http://localhost:4000
-
-### Running application locally
-
-1. Install PostgreSQL locally
-2. Create database
-3. Update .env file with your local PostgreSQL credentials
-4. Run the application:
-```bash
-npm run start:dev
+docker compose down
 ```
 
 ## Testing
 
-After application running open new terminal and enter:
+After starting the application, you can run the tests:
 
-To run all tests:
-```
+```bash
 npm run test
 ```
 
-To run specific test:
-```
-npm run test -- <path-to-test-file>
-```
+## API Documentation
 
-### Auto-fix and format
+After starting the app on port (4000 as default) you can open
+in your browser OpenAPI documentation by typing http://localhost:4000/doc/
+For more information about OpenAPI/Swagger please visit https://swagger.io/
 
-```
+## Auto-fix and format
+
+```bash
 npm run lint
 ```
 
-```
+```bash
 npm run format
 ```
 
