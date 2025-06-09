@@ -29,7 +29,9 @@
     "migration:revert": "npm run typeorm -- migration:revert -d typeorm.config.ts",
     "docker:build": "docker-compose build",
     "docker:scan": "docker scan your-username/home-library:latest && docker scan postgres:latest",
-    "docker:push": "docker push your-username/home-library:latest"
+    "docker:push": "docker push your-username/home-library:latest",
+    "scan": "npm audit && npm audit fix --dry-run && npm outdated",
+    "scan:fix": "npm audit fix && npm update"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
