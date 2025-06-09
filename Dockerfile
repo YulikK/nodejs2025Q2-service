@@ -1,26 +1,29 @@
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci
+
+COPY . .
+
+RUN npm run build
+
 FROM node:22-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
-COPY src/ ./src/
-COPY doc/ ./src/doc/
-COPY typeorm.config.ts ./
-COPY tsconfig.json ./
-COPY docker-entrypoint.sh ./
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/doc/api.yaml ./dist/doc/api.yaml
+COPY docker-entrypoint.sh .
 
-RUN npm run build
-
-RUN mkdir -p dist/doc && cp src/doc/api.yaml dist/doc/
-
-RUN npm ci --only=production
-
-RUN mkdir -p logs && chmod -R 777 logs
-
-RUN chmod +x docker-entrypoint.sh
+RUN mkdir -p logs && chmod -R 777 logs && \
+    chmod +x docker-entrypoint.sh
 
 EXPOSE ${PORT}
 

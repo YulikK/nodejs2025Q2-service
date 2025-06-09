@@ -14,4 +14,4 @@ echo "Waiting for database to be ready..."
 
 
 echo "Starting the application..."
-node dist/src/main.js 
+npm run start:dev 

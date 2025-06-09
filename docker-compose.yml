@@ -14,7 +14,14 @@ services:
       postgres:
         condition: service_healthy
     volumes:
+      - ./src:/app/src:ro
+      - ./doc:/app/doc:ro
       - ./logs:/app/logs
+      - ./package.json:/app/package.json:ro
+      - ./package-lock.json:/app/package-lock.json:ro
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      - ./typeorm.config.ts:/app/typeorm.config.ts:ro
+      - /app/node_modules
     networks:
       - home-library-network
     restart: unless-stopped
@@ -22,15 +29,14 @@ services:
 
   postgres:
     container_name: home-library-db
-    image: postgres:15-alpine
-    ports:
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    image: postgres:15.3-alpine
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_USER}
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     networks:
       - home-library-network
     healthcheck:
@@ -38,10 +44,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
 
 volumes:
-  postgres_data:
+  postgres:
 
 networks:
   home-library-network:
