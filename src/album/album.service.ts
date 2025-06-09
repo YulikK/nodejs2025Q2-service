@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { DataService } from 'src/data/data.service';
 import { Album } from './entities/album.entity';
 import { TrackService } from 'src/track/track.service';
@@ -27,9 +32,14 @@ export class AlbumService extends DataService<Album> {
 
   async create(createAlbumDto: CreateAlbumDto): Promise<Album> {
     if (createAlbumDto.artistId) {
-      const artist = await this.artistService.findOne(createAlbumDto.artistId, false);
+      const artist = await this.artistService.findOne(
+        createAlbumDto.artistId,
+        false,
+      );
       if (!artist) {
-        throw new NotFoundException(`Artist with id ${createAlbumDto.artistId} not found`);
+        throw new NotFoundException(
+          `Artist with id ${createAlbumDto.artistId} not found`,
+        );
       }
     }
     return super.create(createAlbumDto);
@@ -37,9 +47,14 @@ export class AlbumService extends DataService<Album> {
 
   async update(id: string, updateAlbumDto: UpdateAlbumDto): Promise<Album> {
     if (updateAlbumDto.artistId) {
-      const artist = await this.artistService.findOne(updateAlbumDto.artistId, false);
+      const artist = await this.artistService.findOne(
+        updateAlbumDto.artistId,
+        false,
+      );
       if (!artist) {
-        throw new NotFoundException(`Artist with id ${updateAlbumDto.artistId} not found`);
+        throw new NotFoundException(
+          `Artist with id ${updateAlbumDto.artistId} not found`,
+        );
       }
     }
     return super.update(id, updateAlbumDto);

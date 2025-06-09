@@ -29,13 +29,21 @@ export class User {
   @Expose()
   version: number;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  @Transform(({ value }) => value instanceof Date ? value.getTime() : value)
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Transform(({ value }) => (value instanceof Date ? value.getTime() : value))
   @Expose()
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  @Transform(({ value }) => value instanceof Date ? value.getTime() : value)
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @Transform(({ value }) => (value instanceof Date ? value.getTime() : value))
   @Expose()
   updatedAt: Date;
 

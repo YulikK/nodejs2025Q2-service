@@ -11,9 +11,6 @@ import { AlbumService } from '../album/album.service';
 import { ArtistService } from '../artist/artist.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Track } from '../track/entities/track.entity';
-import { Album } from '../album/entities/album.entity';
-import { Artist } from '../artist/entities/artist.entity';
 
 @Injectable()
 export class FavoritesService {
@@ -70,7 +67,7 @@ export class FavoritesService {
       favorites.tracks = [];
     }
 
-    if (!favorites.tracks.find(t => t.id === id)) {
+    if (!favorites.tracks.find((t) => t.id === id)) {
       favorites.tracks.push(track);
       await this.favoritesRepository.save(favorites);
     }
@@ -82,11 +79,11 @@ export class FavoritesService {
       relations: ['tracks'],
     });
 
-    if (!favorites || !favorites.tracks.find(t => t.id === id)) {
+    if (!favorites || !favorites.tracks.find((t) => t.id === id)) {
       throw new NotFoundException('Track is not in favorites');
     }
 
-    favorites.tracks = favorites.tracks.filter(t => t.id !== id);
+    favorites.tracks = favorites.tracks.filter((t) => t.id !== id);
     await this.favoritesRepository.save(favorites);
   }
 
@@ -109,7 +106,7 @@ export class FavoritesService {
       favorites.albums = [];
     }
 
-    if (!favorites.albums.find(a => a.id === id)) {
+    if (!favorites.albums.find((a) => a.id === id)) {
       favorites.albums.push(album);
       await this.favoritesRepository.save(favorites);
     }
@@ -121,11 +118,11 @@ export class FavoritesService {
       relations: ['albums'],
     });
 
-    if (!favorites || !favorites.albums.find(a => a.id === id)) {
+    if (!favorites || !favorites.albums.find((a) => a.id === id)) {
       throw new NotFoundException('Album is not in favorites');
     }
 
-    favorites.albums = favorites.albums.filter(a => a.id !== id);
+    favorites.albums = favorites.albums.filter((a) => a.id !== id);
     await this.favoritesRepository.save(favorites);
   }
 
@@ -148,7 +145,7 @@ export class FavoritesService {
       favorites.artists = [];
     }
 
-    if (!favorites.artists.find(a => a.id === id)) {
+    if (!favorites.artists.find((a) => a.id === id)) {
       favorites.artists.push(artist);
       await this.favoritesRepository.save(favorites);
     }
@@ -160,11 +157,11 @@ export class FavoritesService {
       relations: ['artists'],
     });
 
-    if (!favorites || !favorites.artists.find(a => a.id === id)) {
+    if (!favorites || !favorites.artists.find((a) => a.id === id)) {
       throw new NotFoundException('Artist is not in favorites');
     }
 
-    favorites.artists = favorites.artists.filter(a => a.id !== id);
+    favorites.artists = favorites.artists.filter((a) => a.id !== id);
     await this.favoritesRepository.save(favorites);
   }
 
@@ -175,9 +172,9 @@ export class FavoritesService {
     });
 
     if (favorites) {
-      favorites.artists = favorites.artists.filter(a => a.id !== id);
-      favorites.albums = favorites.albums.filter(a => a.id !== id);
-      favorites.tracks = favorites.tracks.filter(t => t.id !== id);
+      favorites.artists = favorites.artists.filter((a) => a.id !== id);
+      favorites.albums = favorites.albums.filter((a) => a.id !== id);
+      favorites.tracks = favorites.tracks.filter((t) => t.id !== id);
       await this.favoritesRepository.save(favorites);
     }
   }

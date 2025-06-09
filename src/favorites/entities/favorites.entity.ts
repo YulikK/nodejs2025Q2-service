@@ -15,7 +15,7 @@ export class Favorites {
   @JoinTable({
     name: 'favoritesArtists',
     joinColumn: { name: 'favoritesId' },
-    inverseJoinColumn: { name: 'artistId' }
+    inverseJoinColumn: { name: 'artistId' },
   })
   @IsArray()
   @IsNotEmpty()
@@ -26,7 +26,7 @@ export class Favorites {
   @JoinTable({
     name: 'favoritesAlbums',
     joinColumn: { name: 'favoritesId' },
-    inverseJoinColumn: { name: 'albumId' }
+    inverseJoinColumn: { name: 'albumId' },
   })
   @IsArray()
   @IsNotEmpty()
@@ -37,7 +37,7 @@ export class Favorites {
   @JoinTable({
     name: 'favoritesTracks',
     joinColumn: { name: 'favoritesId' },
-    inverseJoinColumn: { name: 'trackId' }
+    inverseJoinColumn: { name: 'trackId' },
   })
   @IsArray()
   @IsNotEmpty()

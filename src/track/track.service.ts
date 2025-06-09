@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { DataService } from 'src/data/data.service';
 import { Track } from './entities/track.entity';
 import { FavoritesService } from 'src/favorites/favorites.service';
@@ -26,16 +31,26 @@ export class TrackService extends DataService<Track> {
 
   async create(createTrackDto: CreateTrackDto): Promise<Track> {
     if (createTrackDto.artistId) {
-      const artist = await this.artistService.findOne(createTrackDto.artistId, false);
+      const artist = await this.artistService.findOne(
+        createTrackDto.artistId,
+        false,
+      );
       if (!artist) {
-        throw new NotFoundException(`Artist with id ${createTrackDto.artistId} not found`);
+        throw new NotFoundException(
+          `Artist with id ${createTrackDto.artistId} not found`,
+        );
       }
     }
 
     if (createTrackDto.albumId) {
-      const album = await this.albumService.findOne(createTrackDto.albumId, false);
+      const album = await this.albumService.findOne(
+        createTrackDto.albumId,
+        false,
+      );
       if (!album) {
-        throw new NotFoundException(`Album with id ${createTrackDto.albumId} not found`);
+        throw new NotFoundException(
+          `Album with id ${createTrackDto.albumId} not found`,
+        );
       }
     }
 
@@ -44,16 +59,26 @@ export class TrackService extends DataService<Track> {
 
   async update(id: string, updateTrackDto: UpdateTrackDto): Promise<Track> {
     if (updateTrackDto.artistId) {
-      const artist = await this.artistService.findOne(updateTrackDto.artistId, false);
+      const artist = await this.artistService.findOne(
+        updateTrackDto.artistId,
+        false,
+      );
       if (!artist) {
-        throw new NotFoundException(`Artist with id ${updateTrackDto.artistId} not found`);
+        throw new NotFoundException(
+          `Artist with id ${updateTrackDto.artistId} not found`,
+        );
       }
     }
 
     if (updateTrackDto.albumId) {
-      const album = await this.albumService.findOne(updateTrackDto.albumId, false);
+      const album = await this.albumService.findOne(
+        updateTrackDto.albumId,
+        false,
+      );
       if (!album) {
-        throw new NotFoundException(`Album with id ${updateTrackDto.albumId} not found`);
+        throw new NotFoundException(
+          `Album with id ${updateTrackDto.albumId} not found`,
+        );
       }
     }
 
@@ -65,7 +90,10 @@ export class TrackService extends DataService<Track> {
     await this.favoritesService.removeFromFavorites(id);
   }
 
-  async clearReference(id: string, field: 'albumId' | 'artistId'): Promise<void> {
+  async clearReference(
+    id: string,
+    field: 'albumId' | 'artistId',
+  ): Promise<void> {
     const tracks = await this.repository
       .createQueryBuilder('track')
       .where(`track.${field} = :id`, { id })

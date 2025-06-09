@@ -24,11 +24,11 @@ export class Artist {
   @Expose()
   grammy: boolean;
 
-  @OneToMany(() => Album, album => album.artist)
+  @OneToMany(() => Album, (album) => album.artist)
   @Expose()
   albums: Album[];
 
-  @OneToMany(() => Track, track => track.artist)
+  @OneToMany(() => Track, (track) => track.artist)
   @Expose()
   tracks: Track[];
 }

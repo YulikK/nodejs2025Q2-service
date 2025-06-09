@@ -6,7 +6,14 @@ import {
   IsUUID,
 } from 'class-validator';
 import { ERROR_MSG } from 'src/constants';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { Artist } from '../../artist/entities/artist.entity';
 import { Track } from '../../track/entities/track.entity';
 import { Expose } from 'class-transformer';
@@ -39,6 +46,6 @@ export class Album {
   @Expose()
   artistId: string;
 
-  @OneToMany(() => Track, track => track.album)
+  @OneToMany(() => Track, (track) => track.album)
   tracks: Track[];
 }
