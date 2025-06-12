@@ -12,12 +12,14 @@ The Home Library Service is a music library management system that allows you to
 ## Running the application
 
 1. Clone this repository:
+
 ```bash
 git clone <repository-url>
 cd <repository-name>
 ```
 
 2. Create a `.env` file in the root directory with the following environment variables:
+
 ```env
 PORT=4000
 POSTGRES_HOST=postgres
@@ -27,6 +29,7 @@ POSTGRES_PASSWORD=admin
 ```
 
 Environment variables description:
+
 - PORT: The port on which the application will run (default: 4000)
 - POSTGRES_HOST: The hostname of the Postgres database (default: postgres)
 - POSTGRES_PORT: The port number of the Postgres database (default: 5432)
@@ -36,14 +39,15 @@ Environment variables description:
 Note: The database name will be automatically set to the same value as POSTGRES_USER.
 
 3. Build and start the application:
+
 ```bash
-docker compose build
 docker compose up
 ```
 
 By default, the application will run on port 4000, in development mode, so it will automatically restart when you make changes to the code in the `src` directory.
 
 4. To stop the application:
+
 ```bash
 docker compose down
 ```
@@ -59,8 +63,8 @@ npm run test
 ## API Documentation
 
 After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/
-For more information about OpenAPI/Swagger please visit https://swagger.io/
+in your browser OpenAPI documentation by typing <http://localhost:4000/doc/>
+For more information about OpenAPI/Swagger please visit <https://swagger.io/>
 
 ## Auto-fix and format
 
@@ -85,11 +89,13 @@ npm run scan:fix
 ```
 
 The `scan` script performs:
+
 - Security audit of dependencies
 - Dry run of vulnerability fixes
 - Check for outdated packages
 
 The `scan:fix` script performs:
+
 - Automatic fixing of vulnerabilities
 - Update of packages to their latest compatible versions
 
@@ -98,6 +104,7 @@ The `scan:fix` script performs:
 The service provides the following functionality:
 
 ### Users
+
 - Get all users
 - Get single user by id
 - Create user
@@ -105,6 +112,7 @@ The service provides the following functionality:
 - Delete user
 
 ### Artists
+
 - Get all artists
 - Get single artist by id
 - Create artist
@@ -112,6 +120,7 @@ The service provides the following functionality:
 - Delete artist
 
 ### Albums
+
 - Get all albums
 - Get single album by id
 - Create album
@@ -119,6 +128,7 @@ The service provides the following functionality:
 - Delete album
 
 ### Tracks
+
 - Get all tracks
 - Get single track by id
 - Create track
@@ -126,6 +136,7 @@ The service provides the following functionality:
 - Delete track
 
 ### Favorites
+
 - Get all favorites
 - Add track to favorites
 - Delete track from favorites
@@ -148,6 +159,7 @@ The service provides the following functionality:
 ## Development
 
 The project is built using:
+
 - Node.js
 - NestJS
 - TypeScript
