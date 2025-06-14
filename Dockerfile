@@ -19,8 +19,11 @@ COPY package*.json ./
 RUN npm ci
 
 COPY --from=builder /app/dist ./dist
+RUN mkdir -p /app/dist/doc
 COPY --from=builder /app/doc/api.yaml ./dist/doc/api.yaml
 COPY docker-entrypoint.sh .
+
+RUN ls -l /app/dist/doc/
 
 RUN mkdir -p logs && chmod -R 777 logs && \
     chmod +x docker-entrypoint.sh
