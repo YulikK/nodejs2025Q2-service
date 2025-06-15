@@ -12,6 +12,7 @@ import { Album } from './album/entities/album.entity';
 import { Track } from './track/entities/track.entity';
 import { Favorites } from './favorites/entities/favorites.entity';
 import { DefaultNamingStrategy } from 'typeorm';
+import { AuthModule } from './auth/auth.module';
 
 class CamelCaseNamingStrategy extends DefaultNamingStrategy {
   columnName(propertyName: string, customName: string): string {
@@ -41,6 +42,7 @@ class CamelCaseNamingStrategy extends DefaultNamingStrategy {
     TrackModule,
     AlbumModule,
     ArtistModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

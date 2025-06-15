@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ERROR_MSG } from 'src/constants';
+import { ERROR_MSG } from 'src/shared/constants';
 import { DeepPartial, Repository } from 'typeorm';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 

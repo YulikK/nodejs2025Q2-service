@@ -5,9 +5,14 @@ import { SwaggerModule, OpenAPIObject } from '@nestjs/swagger';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import * as yaml from 'js-yaml';
+import { JwtAuthGuard } from './auth/auth.guard';
+import { JwtService } from '@nestjs/jwt';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const jwtService = app.get(JwtService);
+  const reflector = app.get(Reflector);
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalPipes(
@@ -16,6 +21,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.useGlobalGuards(new JwtAuthGuard(jwtService, reflector));
 
   const file = await fs.readFile(
     path.join(__dirname, '../doc/api.yaml'),
