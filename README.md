@@ -9,61 +9,80 @@ The Home Library Service is a music library management system that allows you to
 - Git - [Download & Install Git](https://git-scm.com/downloads)
 - Docker - [Download & Install Docker](https://docs.docker.com/get-docker/)
 
-## Running the application
+## Environment Variables
 
-1. Clone this repository:
-
-```bash
-git clone <repository-url>
-cd <repository-name>
-```
-
-2. Create a `.env` file in the root directory with the following environment variables:
+Before running the application, create a `.env` file in the root directory with the following variables:
 
 ```env
 PORT=4000
+
+# Database
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=admin
+POSTGRES_DB=home_library
+
+# JWT
+JWT_SECRET_KEY=your_access_secret
+JWT_SECRET_REFRESH_KEY=your_refresh_secret
+TOKEN_EXPIRE_TIME=1h
+TOKEN_REFRESH_EXPIRE_TIME=24h
+
+# Logging
+LOG_LEVEL=log           # Possible values: error, warn, log, debug, verbose
+LOG_FILE_SIZE_KB=10     # Max log file size in kilobytes before rotation
 ```
 
-Environment variables description:
+**Environment variables description:**
 
 - PORT: The port on which the application will run (default: 4000)
 - POSTGRES_HOST: The hostname of the Postgres database (default: postgres)
 - POSTGRES_PORT: The port number of the Postgres database (default: 5432)
 - POSTGRES_USER: The username for accessing the Postgres database
 - POSTGRES_PASSWORD: The password for accessing the Postgres database
+- - `JWT_SECRET_KEY`, `JWT_SECRET_REFRESH_KEY`: Secrets for signing JWT tokens
+- `TOKEN_EXPIRE_TIME`, `TOKEN_REFRESH_EXPIRE_TIME`: Token expiration times
+- `LOG_LEVEL`: Logging level. Use one of: `error`, `warn`, `log`, `debug`, `verbose`.  
+  For example, set `LOG_LEVEL=debug` to log all logs with type `error`, `warn`, `log`, `debug`
+- `LOG_FILE_SIZE_KB`: Maximum size (in KB) for log files before rotation
 
-Note: The database name will be automatically set to the same value as POSTGRES_USER.
+## Running the application
 
-3. Build and start the application:
+To build and start the application locally with Docker, run:
 
 ```bash
-docker compose up
+docker compose up --build
 ```
 
-By default, the application will run on port 4000, in development mode, so it will automatically restart when you make changes to the code in the `src` directory.
+This will build the images and start all services.  
+The application will be available at <http://localhost:{PORT}>
 
-4. To stop the application:
+To stop the application:
 
 ```bash
 docker compose down
 ```
+
+## Logging
+
+- All requests and responses are logged to files in the `app/dist/logs` directory.
+- Log files are automatically rotated when they reach the size specified in `LOG_FILE_SIZE_KB`.
+- Error logs are written to a separate `error.log` file.
+- You can control the verbosity of logs using the `LOG_LEVEL` environment variable.
 
 ## Testing
 
 After starting the application, you can run the tests:
 
 ```bash
-npm run test
+npm run test:auth
 ```
 
 ## API Documentation
 
 After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing <http://localhost:4000/doc/>
+in your browser OpenAPI documentation by typing <http://localhost:{PORT}/doc/>
 For more information about OpenAPI/Swagger please visit <https://swagger.io/>
 
 ## Auto-fix and format
