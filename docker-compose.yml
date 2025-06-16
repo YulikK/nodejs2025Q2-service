@@ -1,0 +1,60 @@
+services:
+  app:
+    container_name: home-library-app
+    build: .
+    # image: yulikk/nodejs2025q2-service:latest
+    ports:
+      - '${PORT}:${PORT}'
+    environment:
+      - PORT=${PORT}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - JWT_SECRET_REFRESH_KEY=${JWT_SECRET_REFRESH_KEY}
+      - TOKEN_EXPIRE_TIME=${TOKEN_EXPIRE_TIME}
+      - TOKEN_REFRESH_EXPIRE_TIME=${TOKEN_REFRESH_EXPIRE_TIME}
+      - LOG_FILE_SIZE_KB=${LOG_FILE_SIZE_KB}
+      - LOG_LEVEL=${LOG_LEVEL}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src:ro
+      - ./doc:/app/doc:ro
+      - ./logs:/app/logs
+      - ./package.json:/app/package.json:ro
+      - ./package-lock.json:/app/package-lock.json:ro
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      - ./typeorm.config.ts:/app/typeorm.config.ts:ro
+      - /app/node_modules
+    networks:
+      - home-library-network
+    restart: unless-stopped
+    command: npm run start:dev
+
+  postgres:
+    container_name: home-library-db
+    image: postgres:15.3-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - home-library-network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres:
+
+networks:
+  home-library-network:
+    driver: bridge
